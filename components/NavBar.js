@@ -43,7 +43,7 @@ export default function NavBar() {
         </button>
         <ul id="nav_links" className={`nav_links${open ? ' is_open' : ''}`}>
           {PAGES.map((page) => {
-            const current = pathname === page.href;
+            const current = pathname === '/' && page.href === '/#home';
             return (
               <li key={page.href}>
                 <Link
