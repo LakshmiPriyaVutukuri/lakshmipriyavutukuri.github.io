@@ -3,9 +3,6 @@ import ProjectCard from '@/components/ProjectCard';
 import { LEADERSHIP } from '@/lib/leadership';
 import { PROJECTS } from '@/lib/projects';
 
-// Render this page on the server for every request (no static prerender).
-export const dynamic = 'force-dynamic';
-
 export const metadata = { title: 'Projects' };
 
 export default function ProjectsPage() {
