@@ -1,0 +1,38 @@
+# Runs on every push to main (see the Cloud Build trigger in README.md).
+# Builds the image, pushes it to Artifact Registry, and deploys it to Cloud Run.
+substitutions:
+  _REGION: us-central1
+  _SERVICE: portfolio
+  _IMAGE: us-central1-docker.pkg.dev/${PROJECT_ID}/portfolio/site
+
+steps:
+  - id: build
+    name: gcr.io/cloud-builders/docker
+    args: ['build', '-t', '${_IMAGE}:${SHORT_SHA}', '.']
+
+  - id: push
+    name: gcr.io/cloud-builders/docker
+    args: ['push', '${_IMAGE}:${SHORT_SHA}']
+
+  - id: deploy
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - ${_SERVICE}
+      - --image=${_IMAGE}:${SHORT_SHA}
+      - --region=${_REGION}
+      - --platform=managed
+      - --allow-unauthenticated
+      - --port=8080
+      - --min-instances=0
+      - --max-instances=2
+
+images:
+  - ${_IMAGE}:${SHORT_SHA}
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+  # Lets _IMAGE above use ${PROJECT_ID}.
+  dynamicSubstitutions: true

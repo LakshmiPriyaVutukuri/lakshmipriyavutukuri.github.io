@@ -1,0 +1,3 @@
+import PageNav from '@/components/PageNav';
+import { PROFILE, INTRO } from '@/lib/site_content';
+export default function AboutPage() { return <main className="container" style={{padding:'3rem 0',maxWidth:850}}><h1>About Me</h1><p>{INTRO}</p><h2>Education</h2><p>{PROFILE.degree} — Purdue University</p><p>B.Tech in Electrical and Electronics Engineering — Vellore Institute of Technology (VIT)</p><h2>Experience</h2><p>Internship at Jabil Circuit: worked with printed circuit board documentation and functional testing logs to understand circuit performance and identify potential failure patterns.</p><h2>Technical Skills</h2><p>Python, SQL, MATLAB, machine learning, data analysis, Arduino, and embedded systems.</p><PageNav current="/about" /></main> }
